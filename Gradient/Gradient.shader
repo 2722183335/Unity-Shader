@@ -40,16 +40,8 @@ Shader "LK/Gradient"
                 {
                     float4 pos:SV_POSITION;
                     float4 uv : TEXCOORD0;
-                   float4 loaclPos : TEXCOORD1;
+                    float4 localPos : TEXCOORD1;
                 };
-                float4 vLerp(float4 from,float4 to,float r)
-                {
-                    return (1-r)*from+r*to;
-                }
-                float soomthStep(float min,float max,float r)
-                {
-                    return (max-r)/(r-min)+0.5;
-                }
                 float SmoothStep(float min,float max,float x)
                 {
                     float t=saturate(x-min)/(max-min);
@@ -61,21 +53,17 @@ Shader "LK/Gradient"
                     o.pos=UnityObjectToClipPos(v.vertex);
                     o.uv.xy=TRANSFORM_TEX(v.uv,_Texture1);
                      o.uv.zw=TRANSFORM_TEX(v.uv,_Texture2);
-                     o.loaclPos=v.vertex;
+                     o.localPos=v.vertex;
                     return o;
                 }
                 float4 frag(v2f i):SV_TARGET
                 {
                     float st=(sin(_Time*_speed*3.1415926)+1)/2;
-                    float r= 1-SmoothStep(_min,_max,i.loaclPos.y-_hight-st*_Amplitude);
+                    float r= 1-SmoothStep(_min,_max,i.localPos.y-_hight-st*_Amplitude);
                     float4 orign= tex2D(_Texture1,i.uv.xy);
                     float4 gradient= tex2D(_Texture2,i.uv.zw)*_Color*r*4+_Color*r*2;
                     return orign+gradient;
                 }
-
-
-
-
                 ENDCG
         }
     }
