@@ -13,7 +13,7 @@
       return t*t*(3-2*t);
      }
      
- 3.进阶 
+ 3.进阶 程序生成地图的Shader
  
  ![](https://unity-shader.oss-cn-beijing.aliyuncs.com/ProgramGeneratedMapGradient.gif)
  
