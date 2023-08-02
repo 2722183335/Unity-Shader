@@ -41,7 +41,7 @@ Shader "Custom/NewSurfaceShader"
 					  float2 uv4 = screenUV + float2(_Scale, -_Scale);
 					  fixed4 color4 = tex2D(_GrabTex, uv4);
 					  fixed4 sum=(color1+color2 + color3+color4) / 4;
-					  return (s*0.5)*_Color;
+					  return (sum*0.5)*_Color;
 				  }
 			  ENDCG
 
